@@ -349,7 +349,7 @@ textarea::placeholder{color:var(--muted)}
 /* ---------- PIN-Sperre ---------- */
 body.locked{overflow:hidden}
 body.locked>*:not(#lock):not(.bg){visibility:hidden}
-#lock{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;animation:fade .3s}
+#lock{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px}
 #lock[hidden]{display:none}
 .lock-avatar{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;margin-bottom:18px}
 .lock-avatar img{width:68px}

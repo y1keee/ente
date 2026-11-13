@@ -206,7 +206,7 @@ function renderHome(a) {
 
   // Text in der Ringmitte
   let center;
-  if (!has) center = `<img src="duck.svg" alt=""><div class="ring-small">Trag deine letzte Periode ein, dann rechne ich los</div>`;
+  if (!has) center = `<img src="duck.png" alt=""><div class="ring-small">Trag deine letzte Periode ein, dann rechne ich los</div>`;
   else {
     let label, big, small, word = false, num = '';
     if (periodNow) { label = 'Periode'; big = `Tag ${diff(a.p[a.p.length - 1].start, t) + 1}`; small = `von ca. ${a.dur}`; word = true; }
