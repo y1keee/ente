@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffe4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#170a11" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Ente</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b><b></b><b></b><b></b><b></b><u></u><u></u></div>
+<svg id="lg" width="0" height="0" style="position:absolute" aria-hidden="true"><defs></defs></svg>
+
+<header class="top">
+  <div>
+    <p class="hello" id="hello"></p>
+    <h1 id="title"></h1>
+  </div>
+  <div class="avatar glass"><img src="duck.svg" alt=""></div>
+</header>
+
+<main>
+  <section class="view" id="view-home"></section>
+
+  <section class="view" id="view-cal" hidden>
+    <div class="glass frost card">
+      <div class="cal-pair">
+        <div>
+          <div class="cal-nav">
+            <button id="prev" aria-label="Voriger Monat"><svg class="ic" viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6"/></svg></button>
+            <span class="cal-title"><strong id="month"></strong><button id="cal-today" class="small-btn" hidden>Heute</button></span>
+            <button id="next" aria-label="Nächster Monat"><svg class="ic" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></svg></button>
+          </div>
+          <div class="wds"><div class="wd">Mo</div><div class="wd">Di</div><div class="wd">Mi</div><div class="wd">Do</div><div class="wd">Fr</div><div class="wd">Sa</div><div class="wd">So</div></div>
+          <div class="grid" id="cal"></div>
+        </div>
+        <!-- Zweiter Monat, nur bei breitem Fenster sichtbar -->
+        <div class="cal-second">
+          <div class="cal-nav">
+            <i class="cal-gap"></i>
+            <strong id="month2"></strong>
+            <button id="next2" aria-label="Nächster Monat"><svg class="ic" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></svg></button>
+          </div>
+          <div class="wds"><div class="wd">Mo</div><div class="wd">Di</div><div class="wd">Mi</div><div class="wd">Do</div><div class="wd">Fr</div><div class="wd">Sa</div><div class="wd">So</div></div>
+          <div class="grid" id="cal2"></div>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i class="k1"></i>Periode</span><span><i class="k2"></i>Periode erwartet</span>
+        <span><i class="k3"></i>Fruchtbare Tage</span><span><i class="k4"></i>Eisprung</span>
+        <span><i class="k6"></i>Schmierblutung</span><span><i class="k5"></i>Notiz oder Stimmung</span>
+      </div>
+    </div>
+    <p class="note">Wähle einen Tag, um etwas einzutragen. Den Monat wechselst du mit den Pfeilen, den Pfeiltasten oder per Wischen.</p>
+  </section>
+
+  <section class="view" id="view-more" hidden></section>
+</main>
+
+<nav class="tabs">
+  <div class="lens"></div>
+  <button data-view="home"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3.5c3 3.6 5.5 6.6 5.5 10a5.5 5.5 0 0 1-11 0c0-3.4 2.5-6.4 5.5-10z"/></svg>Heute</button>
+  <button data-view="cal"><svg class="ic" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="4"/><path d="M3.5 10.5h17M8 3v4M16 3v4"/></svg>Kalender</button>
+  <button data-view="more"><svg class="ic" viewBox="0 0 24 24"><path d="M5 20v-6M12 20V5M19 20v-10"/></svg>Übersicht</button>
+</nav>
+
+<dialog id="sheet">
+  <form method="dialog" class="sheet">
+    <div class="sheet-grab"><div class="handle"></div></div>
+    <div id="sheet-body"></div>
+    <div class="sheet-actions">
+      <button type="button" id="sheet-cancel" class="ghost">Abbrechen</button>
+      <button type="button" id="sheet-save" class="primary">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="lock" hidden>
+  <div class="lock-avatar glass"><img src="duck.svg" alt=""></div>
+  <p id="lock-title"></p>
+  <div class="dots" id="dots"></div>
+  <p class="lock-msg" id="lock-msg"></p>
+  <div class="pad" id="pad"></div>
+</div>
+
+<div id="toast"></div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
