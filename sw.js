@@ -1,7 +1,7 @@
 // Macht die App offline nutzbar. Zeigt sofort die gespeicherte Version
 // und lädt im Hintergrund Updates nach (beim nächsten Öffnen aktiv).
-const CACHE = 'ente-v9';
-const FILES = ['./', 'index.html', 'style.css', 'app.js', 'config.js', 'manifest.webmanifest', 'icon.svg', 'duck.svg', 'icon-192.png', 'icon-512.png'];
+const CACHE = 'ente-v10';
+const FILES = ['./', 'index.html', 'style.css', 'app.js', 'config.js', 'manifest.webmanifest', 'duck.svg', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
