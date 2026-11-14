@@ -585,6 +585,8 @@ function renderMore(a) {
   else if (a.known) info.push('Ab drei erfassten Zyklen zeige ich, wie regelmäßig dein Zyklus ist.');
   else info.push('Noch keine zwei Perioden eingetragen. Bis dahin rechne ich mit 28 Tagen.');
   if (a.outliers) info.push(`${a.outliers === 1 ? 'Ein auffällig langer Zyklus wird' : a.outliers + ' auffällig lange Zyklen werden'} nicht mitgerechnet. Vermutlich fehlt dort ein Eintrag.`);
+  // Wer nur den ersten Tag einträgt, bekommt eine zu kurze Periodendauer vorhergesagt
+  if (a.p.length && a.dur < 3) info.push('Tipp: Trag alle Tage deiner Periode ein, nicht nur den ersten. Dann stimmt auch die vorhergesagte Dauer.');
 
   const count = {};
   Object.values(db.days).forEach(e => (e.symptoms || []).forEach(s => { count[s] = (count[s] || 0) + 1; }));
@@ -872,7 +874,7 @@ function applyGlass() {
     if (!w || !h) return;
     const r = Math.round(Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, w / 2, h / 2));
     const small = w * h < 40000; // Seitenleiste, Avatar, PIN-Tasten: mit Farbsaum
-    const tail = el.classList.contains('tabs') ? 'blur(3px) saturate(1.9)' : el.classList.contains('frost') ? 'blur(20px) saturate(1.5)' : 'blur(7px) saturate(1.7)';
+    const tail = el.classList.contains('tabs') ? 'blur(4px) saturate(1.9)' : el.classList.contains('frost') ? 'blur(26px) saturate(1.4)' : 'blur(16px) saturate(1.6)';
     const f = `url(#${lgFilter(w, h, r, small)}) ${tail}`;
     if (el.dataset.lgf === f) return;
     el.dataset.lgf = f;

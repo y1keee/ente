@@ -19,8 +19,10 @@
   --bg-grad:linear-gradient(165deg,#ffeef4 0%,#ffd6e6 50%,#ffe9dc 100%);
   --b1:#ff9ec4;--b2:#ffd0a1;--b3:#f58fd2;--b4:#cdb0ff;
   --la:140deg; /* Winkel der Lichtkante, folgt auf dem Handy der Neigung */
-  --frost-a:rgba(255,250,252,.8);--frost-b:rgba(255,244,249,.62);
-  --lg-a:rgba(255,255,255,.44);--lg-b:rgba(255,255,255,.12);--lg-glow:rgba(255,255,255,.16);--spot:rgba(255,255,255,.36);--orb-hi:rgba(255,255,255,.95);
+  --line:rgba(61,21,40,.13);--tile:rgba(255,255,255,.5);--yellow-line:rgba(226,160,0,.75);
+  /* Fenster am PC: deutlich deckender, damit die Kugeln dahinter das Lesen nicht stören */
+  --frost-a:rgba(255,252,253,.94);--frost-b:rgba(255,246,250,.88);
+  --lg-a:rgba(255,252,253,.8);--lg-b:rgba(255,244,249,.64);--lg-glow:rgba(255,255,255,.16);--spot:rgba(255,255,255,.36);--orb-hi:rgba(255,255,255,.95);
   transition:--b1 1.6s,--b2 1.6s,--b3 1.6s,--b4 1.6s;
 }
 /* Stimmung je Zyklusphase */
@@ -41,8 +43,9 @@
     --base:#170a11;--top-fade:rgba(23,10,17,.7);--tab-base:linear-gradient(rgba(36,14,26,.62),rgba(36,14,26,.62));
     --bg-grad:linear-gradient(165deg,#1f0d17 0%,#170a11 50%,#1c0f0d 100%);
     --b1:#a3215a;--b2:#6e3519;--b3:#751c64;--b4:#3a2875;
-    --frost-a:rgba(58,26,43,.78);--frost-b:rgba(44,18,32,.66);
-    --lg-a:rgba(255,255,255,.11);--lg-b:rgba(255,255,255,.02);--lg-glow:rgba(255,255,255,.05);--spot:rgba(255,255,255,.1);--orb-hi:rgba(255,255,255,.6);
+    --line:rgba(255,255,255,.14);--tile:rgba(255,255,255,.04);--yellow-line:rgba(255,201,60,.6);
+    --frost-a:rgba(54,25,40,.94);--frost-b:rgba(40,17,29,.9);
+    --lg-a:rgba(62,29,46,.8);--lg-b:rgba(42,18,31,.68);--lg-glow:rgba(255,255,255,.05);--spot:rgba(255,255,255,.1);--orb-hi:rgba(255,255,255,.6);
   }
   .disc{opacity:.28}
   :root[data-phase="period"]{--b1:#b01c58;--b2:#7a2a22;--b3:#7d1a5c;--b4:#55206e}
@@ -193,8 +196,9 @@ h3{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.09e
 .cal-nav strong{font-size:1.05rem;letter-spacing:-.01em}
 .cal-nav button{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center;background:var(--glass-2);box-shadow:inset 0 0 0 1px var(--rim-c)}
 .wds,.grid{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}
-.wd{font-size:.68rem;font-weight:600;color:var(--muted);padding-bottom:6px}
-.grid{row-gap:5px;touch-action:pan-y}
+.wds{border-bottom:1px solid var(--line);margin-bottom:8px}
+.wd{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-bottom:8px}
+.grid{row-gap:4px;touch-action:pan-y}
 .grid.sl{animation:slide-l .38s cubic-bezier(.2,.9,.3,1)}
 .grid.sr{animation:slide-r .38s cubic-bezier(.2,.9,.3,1)}
 @keyframes slide-l{from{opacity:0;transform:translateX(36px)}}
@@ -208,22 +212,27 @@ h3{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.09e
 .day:disabled{color:var(--muted);cursor:default}
 .day .n{position:relative;z-index:1;width:28px;height:28px;border-radius:50%;display:grid;place-items:center}
 .day .lb{position:relative;z-index:1;font-size:.53rem;font-weight:700;line-height:1;white-space:nowrap}
-/* Zusammenhängende Tage werden zu einem durchgehenden Band */
-.day::before{content:"";position:absolute;top:2px;bottom:2px;left:2px;right:2px;border-radius:15px;border:1.5px solid transparent;transition:background-color .2s}
+/* Jeder Tag ist ein umrandetes Feld. Zusammenhängende Tage verschmelzen zu einem umrandeten Band. */
+.day::before{content:"";position:absolute;top:2px;bottom:2px;left:2px;right:2px;border-radius:13px;border:1px solid var(--line);background:var(--tile);transition:background-color .2s,border-color .2s}
 .day.jl::before{left:0;border-top-left-radius:0;border-bottom-left-radius:0;border-left-width:0}
 .day.jr::before{right:0;border-top-right-radius:0;border-bottom-right-radius:0;border-right-width:0}
 /* Periode (eingetragen): kräftig gefüllt, weiße Schrift */
-.day.g-p::before{background:linear-gradient(180deg,#ff8db5,#e8457f)}
+.day.g-p::before{background:linear-gradient(180deg,#ff8db5,#e8457f);border-color:#d63a72;border-width:1.5px}
 .day.g-p{color:#fff;font-weight:700}
 /* Periode erwartet: hell mit gestricheltem Rand */
-.day.g-e::before{background:var(--tint);border-style:dashed;border-color:var(--accent-2)}
+.day.g-e::before{background:var(--tint);border:1.5px dashed var(--accent)}
 .day.g-e{color:var(--accent);font-weight:700}
-/* Fruchtbare Tage: gelb, der Eisprung als gefüllter Kreis */
-.day.g-f::before{background:var(--yellow-tint)}
+/* Fruchtbare Tage: gelb umrandet, der Eisprung als gefüllter Kreis */
+.day.g-f::before{background:var(--yellow-tint);border:1.5px solid var(--yellow-line)}
 .day.g-f{color:var(--yellow-text);font-weight:700}
+.day:is(.g-p,.g-e,.g-f).jl::before{border-left-width:0}
+.day:is(.g-p,.g-e,.g-f).jr::before{border-right-width:0}
 .day.ovu .n{background:var(--yellow);color:#5c3d00;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 3px 8px rgba(255,180,0,.3)}
-/* Heute: Ring um die Zahl */
-.day.today .n{box-shadow:inset 0 0 0 2px currentColor;font-weight:800}
+/* Heute: kräftig umrandetes Feld. Liegt heute in einem Band, bekommt die Zahl einen Ring. */
+.day.today{font-weight:800}
+.day.today:not([class*="g-"])::before{border:2px solid var(--accent);background:var(--tint)}
+.day.today:not([class*="g-"]) .lb{color:var(--accent)}
+.day.today[class*="g-"] .n{box-shadow:inset 0 0 0 2px currentColor}
 .day.today.ovu .n{box-shadow:inset 0 0 0 2px #5c3d00}
 /* Punkt oben rechts: Schmierblutung (rosa), Notiz oder Stimmung (grau) */
 .day.has::after,.day.spot::after{content:"";position:absolute;z-index:2;top:6px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--muted)}
@@ -244,8 +253,9 @@ h3{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.09e
 .legend span{display:inline-flex;align-items:center;gap:7px}
 .legend i{width:22px;height:14px;border-radius:7px;flex:none}
 .legend .k1{background:linear-gradient(180deg,#ff8db5,#e8457f)}
-.legend .k2{background:var(--tint);border:1.5px dashed var(--accent-2)}
-.legend .k3{background:var(--yellow-tint)}
+.legend .k2{background:var(--tint);border:1.5px dashed var(--accent)}
+.legend .k3{background:var(--yellow-tint);border:1.5px solid var(--yellow-line)}
+.legend .k0{background:var(--tint);border:2px solid var(--accent)}
 .legend .k4{width:14px;border-radius:50%;background:var(--yellow)}
 .legend .k6{width:7px;height:7px;border-radius:50%;background:var(--accent)}
 .legend .k5{width:7px;height:7px;border-radius:50%;background:var(--muted)}
@@ -421,8 +431,9 @@ body.locked>*:not(#lock):not(.bg){visibility:hidden}
   .day{height:72px;padding-top:9px;font-size:1.08rem}
   .day .n{width:34px;height:34px}
   .day .lb{font-size:.66rem}
-  .day::before{top:3px;bottom:3px;border-radius:18px}
-  .day.has::after,.day.spot::after{top:9px;right:9px;width:7px;height:7px}
+  .day::before{top:3px;bottom:3px;left:3px;right:3px;border-radius:16px}
+  .day.has::after,.day.spot::after{top:10px;right:11px;width:7px;height:7px}
+  .wd{font-size:.74rem}
   .legend{font-size:.86rem}
   /* Eingabe als Fenster in der Mitte statt von unten */
   dialog{margin:auto;border-radius:32px;max-width:540px;max-height:88dvh}
@@ -441,7 +452,10 @@ body.locked>*:not(#lock):not(.bg){visibility:hidden}
   .mini .day{height:60px;padding-top:7px;font-size:.98rem}
   .mini .day .n{width:30px;height:30px}
   .mini .day .lb{font-size:.56rem}
-  .mini .day::before{top:2px;bottom:2px;border-radius:15px}
+  .mini .day::before{top:2px;bottom:2px;border-radius:13px}
+  .mini .day:not(.jl)::before{left:2px}
+  .mini .day:not(.jr)::before{right:2px}
+  .mini .wd{font-size:.66rem}
   .mini .day.has::after,.mini .day.spot::after{top:6px;right:6px;width:6px;height:6px}
 }
 /* Kalender: ab 1100px zwei Monate nebeneinander */
@@ -471,7 +485,7 @@ kbd{font:inherit;font-size:.78rem;font-weight:700;min-width:26px;text-align:cent
   .glass:hover::after{opacity:1}
   .num{transition:transform .2s cubic-bezier(.3,1.5,.5,1)}
   .week button:not(:disabled):hover .num{transform:scale(1.1)}
-  .day:not(:disabled):not([class*="g-"]):hover::before{background-color:var(--tint)}
+  .day:not(:disabled):not([class*="g-"]):hover::before{background-color:var(--tint);border-color:var(--accent-2)}
   .seg button:not(.on):hover,.chip:not(.on):hover,.small-btn:hover,.cal-nav button:hover,.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--accent-2)}
   .primary:hover,.banner button:hover{filter:brightness(1.07)}
   .tabs button:not(.on):hover{color:var(--text)}
